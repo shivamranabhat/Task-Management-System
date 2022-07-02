@@ -14,11 +14,12 @@ include('config.php');
     <div class="container mt-3">
       <?php
       if(isset($_POST['submit'])){
+        $id = $_POST['uid'];
         $title = $_POST['title'];
         $description = $_POST['description'];
         if($title !="" && $description !="")
         {
-          $query = "INSERT INTO task(title,description) VALUES('$title','$description')";
+          $query = "INSERT INTO task(userid,title,description) VALUES('$id','$title','$description')";
           $query_result = mysqli_query($conn,$query);
           if($query_result){
             ?>
@@ -45,9 +46,19 @@ include('config.php');
         }
       }
       ?>
+      <?php
+      session_start();
+      if(isset($_SESSION['id'])){
+        $uid = $_SESSION['id'];
+      }
+      ?>
       <form action="#" method="POST">
       <div class="form bg-light p-5">
         <h1 class="text-primary text-center">Task Management System</h1>
+        <div class="mb-3 mt-3 d-none">
+            <label for="task">User Id</label>
+            <input type="text" value="<?php echo $uid?>" class="form-control" id="uid" placeholder="" name="uid">
+          </div>
           <div class="mb-3 mt-3">
             <label for="task">Task Title</label>
             <input type="text" class="form-control" id="title" placeholder="Enter task name" name="title">
@@ -67,6 +78,9 @@ include('config.php');
             }?>"><button type="submit" class="btn btn-primary btn-lg px-4 mt-3" name="submit" >Submit</button></a>
       </div>
     </form>
+    <div class="alert alert-dark" role="alert">
+      <a href="manage.php" style="text-decoration:none"><h4 class="alert-heading text-center">Manage Tasks</h4></a>
+    </div>
 </div>
 </body>
 </html>

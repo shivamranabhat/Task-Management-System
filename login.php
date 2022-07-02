@@ -24,6 +24,7 @@ require('config.php');
             if($count==1){
               session_start();
               $fetch_data = mysqli_fetch_assoc($query_result);
+              $_SESSION['id'] = $fetch_data['id'];
               $_SESSION['name'] = $fetch_data['name'];
               $_SESSION['address'] = $fetch_data['address'];
               $_SESSION['email'] = $fetch_data['email'];
